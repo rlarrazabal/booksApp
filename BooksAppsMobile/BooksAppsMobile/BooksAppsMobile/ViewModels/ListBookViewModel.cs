@@ -1,9 +1,11 @@
 ﻿using BooksAppsMobile.Models;
 using BooksAppsMobile.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace BooksAppsMobile.ViewModels
@@ -30,13 +32,26 @@ namespace BooksAppsMobile.ViewModels
             set => SetProperty(ref books, value);
         }
 
-        public ListBookViewModel()
+        public ICommand LoadMoreBooksCommand => new Command<Book>(async (b) => await LoadBooks(), CanLoadMoreBooks);
+
+        public ICommand BookSelectedCommand => new Command<Book>(async (b) => await CheckBook(b));
+
+        private async Task CheckBook(Book book)
+        {
+            await App.Current.MainPage.Navigation.PushAsync(new Page());
+        }
+
+        public ListBookViewModel(IDataService<Book> dataService)
         {
             Books = new ObservableCollection<Book>();
-            BookRepository = new BookService();
+            BookRepository = (BookService)dataService;
             MessagingCenter.Subscribe<SearchBookViewModel, string>(this, "Search", async (vm, t) => { Term = t; await LoadBooks(); });
         }
 
+        /// <summary>
+        /// Retrieves a set ammount of books from the service
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadBooks()
         {
             try
@@ -52,6 +67,16 @@ namespace BooksAppsMobile.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        /// <summary>
+        /// Checks if the appearing book is the last to load more books 
+        /// </summary>
+        /// <param name="book">Newly appearing book</param>
+        /// <returns>Can load more books in the list</returns>
+        public bool CanLoadMoreBooks(Book book)
+        {
+            return !IsBusy && Books.Count >= PAGESIZE && book.Id == Books.Last().Id;
         }
 
     }

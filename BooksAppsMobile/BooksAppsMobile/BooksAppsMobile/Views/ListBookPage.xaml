@@ -1,17 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BooksAppsMobile.Views.ListBookPage">
+             xmlns:behaviors="clr-namespace:BooksAppsMobile.Behaviors"
+             xmlns:converters ="clr-namespace:BooksAppsMobile.Converters"
+             xmlns:local="clr-namespace:BooksAppsMobile.Markups"
+             x:Class="BooksAppsMobile.Views.ListBookPage" x:Name="BookList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemTappedEventArgsToItemConverter x:Key="ItemConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Label Text="{Binding Term}" HorizontalOptions="Center" />
-            <ListView ItemsSource="{Binding Books}" HasUnevenRows="True"
+            <ListView ItemsSource="{Binding Books}" HasUnevenRows="True" 
                       IsRefreshing="{Binding IsBusy}" CachingStrategy="RetainElement" >
+                <ListView.Behaviors>
+                    <behaviors:InfiniteScrollBehavior Command="{Binding LoadMoreBooksCommand}" />
+                    <behaviors:EventToCommandBehavior EventName="ItemTapped" 
+                        Command="{Binding Path=BindingContext.BookSelectedCommand, Source={x:Reference BookList}}"
+                        Converter="{StaticResource ItemConverter}"/>
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="10">
-                                <Image Source="{Binding Thumbnail}" Aspect="AspectFit" HeightRequest="50" WidthRequest="40" />
+                                <Image Source="{Binding ThumbnailIS}" Aspect="AspectFit" HeightRequest="50" WidthRequest="40" />
                                 <StackLayout Spacing="2" >
                                     <Label Text="{Binding Title}" FontSize="16" />
                                     <Label Text="{Binding Authors}" FontSize="12" />
@@ -21,6 +35,17 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <StackLayout IsVisible="{Binding IsBusy}" HeightRequest="30">
+                        <StackLayout.Triggers>
+                            <Trigger TargetType="StackLayout" Property="IsVisible" Value="False">
+                                <Setter Property="HeightRequest" Value="0"/>
+                            </Trigger>
+                        </StackLayout.Triggers>
+                        <Label Text="Loading..." FontSize="Large" TextColor="Blue"
+                               VerticalOptions="Center" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </ListView.Footer>
             </ListView>
         </StackLayout>
     </ContentPage.Content>

@@ -10,6 +10,7 @@ namespace BooksAppsMobile.Models
         public string Authors { get; set; }
         public string PublishDate { get; set; }
         public string Thumbnail { get; set; }
+        public ImageSource ThumbnailIS { get; set; }
         public string WebLink { get; set; }
 
         public Book() { }
@@ -22,6 +23,7 @@ namespace BooksAppsMobile.Models
             Authors = googleBook.volumeInfo?.authors!=null? string.Join(", ", googleBook.volumeInfo?.authors): "Sin autor";
             WebLink = googleBook.accessInfo?.webReaderLink ?? "";
             Thumbnail = googleBook.volumeInfo?.imageLinks?.thumbnail;
+            ThumbnailIS = googleBook.volumeInfo?.imageLinks?.thumbnail;
         }
     }
 }

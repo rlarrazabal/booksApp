@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using BooksAppsMobile.Views;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -17,6 +18,7 @@ namespace BooksAppsMobile.ViewModels
 
         private async Task SearchBook(string term)
         {
+            await Application.Current.MainPage.Navigation.PushAsync(new ListBookPage());
             MessagingCenter.Send(this, "Search", term);
         }
 

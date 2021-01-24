@@ -1,10 +1,5 @@
-﻿using BooksAppsMobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using BooksAppsMobile.Services;
+using BooksAppsMobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +11,7 @@ namespace BooksAppsMobile.Views
         public ListBookPage()
         {
             InitializeComponent();
-            BindingContext = new ListBookViewModel();
+            BindingContext = new ListBookViewModel(new BookService());
         }
     }
 }
