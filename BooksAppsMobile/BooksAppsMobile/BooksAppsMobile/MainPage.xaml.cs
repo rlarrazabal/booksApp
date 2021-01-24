@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BooksAppsMobile.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,11 +9,15 @@ using Xamarin.Forms;
 
 namespace BooksAppsMobile
 {
+    /// <summary>
+    /// Search page
+    /// </summary>
     public partial class MainPage : ContentPage
     {
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new SearchBookViewModel();
         }
     }
 }
