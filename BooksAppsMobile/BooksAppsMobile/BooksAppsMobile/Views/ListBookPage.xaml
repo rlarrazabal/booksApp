@@ -3,18 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="clr-namespace:BooksAppsMobile.Behaviors"
              xmlns:converters ="clr-namespace:BooksAppsMobile.Converters"
-             xmlns:local="clr-namespace:BooksAppsMobile.Markups"
              x:Class="BooksAppsMobile.Views.ListBookPage" x:Name="BookList">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsToItemConverter x:Key="ItemConverter" />
+            <converters:ImagePlaceholderConverter x:Key="ImagePlaceHolderConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Label Text="{Binding Term}" HorizontalOptions="Center" />
             <ListView ItemsSource="{Binding Books}" HasUnevenRows="True" 
-                      IsRefreshing="{Binding IsBusy}" CachingStrategy="RetainElement" >
+                      IsRefreshing="{Binding IsBusy}" CachingStrategy="RecycleElement" >
                 <ListView.Behaviors>
                     <behaviors:InfiniteScrollBehavior Command="{Binding LoadMoreBooksCommand}" />
                     <behaviors:EventToCommandBehavior EventName="ItemTapped" 
@@ -25,11 +25,11 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="10">
-                                <Image Source="{Binding ThumbnailIS}" Aspect="AspectFit" HeightRequest="50" WidthRequest="40" />
+                                <Image Source="{Binding Thumbnail,Converter={StaticResource ImagePlaceHolderConverter}}" Aspect="AspectFit" HeightRequest="50" WidthRequest="40" />
                                 <StackLayout Spacing="2" >
                                     <Label Text="{Binding Title}" FontSize="16" />
                                     <Label Text="{Binding Authors}" FontSize="12" />
-                                    <Label Text="{Binding PublishedDate}" FontSize="12" />
+                                    <Label Text="{Binding PublishDate}" FontSize="12" />
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>

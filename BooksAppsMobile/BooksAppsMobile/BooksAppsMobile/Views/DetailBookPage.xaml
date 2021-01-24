@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:markups ="clr-namespace:BooksAppsMobile.Markups"
+             xmlns:converters ="clr-namespace:BooksAppsMobile.Converters"
              x:Class="BooksAppsMobile.Views.DetailBookPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImagePlaceholderConverter x:Key="ImagePlaceHolderConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -14,11 +21,11 @@
                 <ColumnDefinition Width="40*" />
                 <ColumnDefinition Width="60*" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Path=Book.Thumbnail}" Aspect="AspectFill" Grid.Column="0" Grid.RowSpan="4" />
+            <Image Source="{Binding Path=Book.Thumbnail,Converter={StaticResource ImagePlaceHolderConverter}}" Aspect="AspectFill" Grid.Column="0" Grid.RowSpan="4" />
             <StackLayout Spacing="3" Padding="6" Grid.Column="1" Grid.RowSpan="3">
                 <Label Text="{Binding Path=Book.Title}" Grid.Column="1" Grid.Row="0" VerticalOptions="CenterAndExpand"  HorizontalOptions="StartAndExpand" />
-                <Label Text="{Binding Path=Book.Author}" Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand"  HorizontalOptions="StartAndExpand" />
-                <Label Text="{Binding Path=Book.PublishedDate}" Grid.Column="1" Grid.Row="2" HorizontalOptions="StartAndExpand" />
+                <Label Text="{Binding Path=Book.Authors}" Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand"  HorizontalOptions="StartAndExpand" />
+                <Label Text="{Binding Path=Book.PublishDate}" Grid.Column="1" Grid.Row="2" HorizontalOptions="StartAndExpand" />
                 <Label Text="Read it" FontAttributes="Bold" Grid.Column="1" Grid.Row="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CheckCommand}" CommandParameter="{Binding Path=Book.WebLink}" NumberOfTapsRequired="1"/>
