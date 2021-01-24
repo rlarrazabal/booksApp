@@ -9,18 +9,19 @@ namespace BooksAppsMobile.ViewModels
     public class DetailBookViewModel : BaseViewModel
     {
         private Book book;
+
         public Book Book { get => book; set => SetProperty(ref book, value); }
 
-        public ICommand CheckCommand => new Command<string>(async (x) => { await CheckBook(x); }, CanCheckBook);
+        public ICommand CheckCommand => new Command<string>(async (weblink) => { await ReadBook(weblink); }, CanReadBook);
 
-        private bool CanCheckBook(string arg)
+        private bool CanReadBook(string weblink)
         {
-            return !string.IsNullOrWhiteSpace(arg);
+            return !string.IsNullOrWhiteSpace(weblink);
         }
 
-        private async Task CheckBook(string x)
+        private async Task ReadBook(string weblink)
         {
-            await App.Current.MainPage.Navigation.PushAsync(new BookWebPage(x));
+            await App.Current.MainPage.Navigation.PushAsync(new BookWebPage(weblink));
         }
 
         public DetailBookViewModel(Book book)

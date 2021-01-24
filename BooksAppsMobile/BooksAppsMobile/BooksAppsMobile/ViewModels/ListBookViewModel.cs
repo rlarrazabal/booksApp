@@ -15,7 +15,7 @@ namespace BooksAppsMobile.ViewModels
     {
         private const int PAGESIZE = 20;
 
-        private readonly BookService BookRepository;
+        private readonly IBookService BookRepository;
 
         private string term = string.Empty;
 
@@ -35,18 +35,18 @@ namespace BooksAppsMobile.ViewModels
 
         public ICommand LoadMoreBooksCommand => new Command<Book>(async (b) => await LoadBooks(), CanLoadMoreBooks);
 
-        public ICommand BookSelectedCommand => new Command<Book>(async (b) => await CheckBook(b));
+        public ICommand BookSelectedCommand => new Command<Book>(async (b) => await CheckBookDetail(b));
 
-        private async Task CheckBook(Book book)
+        private async Task CheckBookDetail(Book book)
         {
             await App.Current.MainPage.Navigation.PushAsync(new DetailBookPage(book));
         }
 
-        public ListBookViewModel(IDataService<Book> dataService)
+        public ListBookViewModel(IBookService dataService)
         {
+            BookRepository = dataService;
             Books = new ObservableCollection<Book>();
-            BookRepository = (BookService)dataService;
-            MessagingCenter.Subscribe<SearchBookViewModel, string>(this, "Search", async (vm, t) => { Term = t; await LoadBooks(); });
+            MessagingCenter.Subscribe<SearchBar, string>(this, "Search", async (vm, t) => { Term = t; await LoadBooks(); });
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace BooksAppsMobile.ViewModels
         /// <returns>Can load more books in the list</returns>
         public bool CanLoadMoreBooks(Book book)
         {
-            return !IsBusy && Books.Count >= PAGESIZE && book.Id == Books.Last().Id;
+            return !string.IsNullOrWhiteSpace(Term) && !IsBusy && Books.Count >= PAGESIZE && book.Id == Books.Last().Id;
         }
 
     }

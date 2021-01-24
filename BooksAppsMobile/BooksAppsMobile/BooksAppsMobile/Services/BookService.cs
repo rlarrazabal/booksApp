@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksAppsMobile.Services
 {
-    public class BookService:IDataService<Book>
+    public class BookService:IBookService
     {
         readonly string url = "https://www.googleapis.com/books/v1/volumes?q={0}&startIndex={1}&maxResults={2}";
 

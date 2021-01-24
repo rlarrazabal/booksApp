@@ -7,6 +7,9 @@ using Xamarin.Forms;
 
 namespace BooksAppsMobile.Converters
 {
+    /// <summary>
+    /// Converter to show the image from url and if no url is provided to show placeholder
+    /// </summary>
     public class ImagePlaceholderConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
