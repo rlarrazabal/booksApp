@@ -1,5 +1,6 @@
 ﻿using BooksAppsMobile.Models;
 using BooksAppsMobile.Services;
+using BooksAppsMobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,7 +39,7 @@ namespace BooksAppsMobile.ViewModels
 
         private async Task CheckBook(Book book)
         {
-            await App.Current.MainPage.Navigation.PushAsync(new Page());
+            await App.Current.MainPage.Navigation.PushAsync(new DetailBookPage(book));
         }
 
         public ListBookViewModel(IDataService<Book> dataService)
