@@ -7,6 +7,9 @@ using Xamarin.Forms;
 
 namespace BooksAppsMobile.Behaviors
 {
+    /// <summary>
+    /// Behavior to trigger the event action whith a command binding
+    /// </summary>
     public class EventToCommandBehavior : Behavior<View>
     {
         View view;

@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace BooksAppsMobile.Behaviors
 {
+    /// <summary>
+    /// Behavior to load more items to a list when the bottom is reached and last item appears
+    /// </summary>
     public class InfiniteScrollBehavior:Behavior<ListView>
     {
         public ListView AssociatedObject { get; private set; }
