@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace BooksAppsMobile.ViewModel
+namespace BooksAppsMobile.ViewModels
 {
     public class SearchBookViewModel:BaseViewModel
     {

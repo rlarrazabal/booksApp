@@ -1,10 +1,4 @@
-﻿using BooksAppsMobile.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BooksAppsMobile.ViewModels;
 using Xamarin.Forms;
 
 namespace BooksAppsMobile

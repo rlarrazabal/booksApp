@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace BooksAppsMobile.ViewModel
+namespace BooksAppsMobile.ViewModels
 {
     /// <summary>
     /// Base ViewModel
