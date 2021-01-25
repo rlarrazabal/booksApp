@@ -46,7 +46,7 @@ namespace BooksAppsMobile.ViewModels
         {
             BookRepository = dataService;
             Books = new ObservableCollection<Book>();
-            MessagingCenter.Subscribe<SearchBar, string>(this, "Search", async (vm, t) => { Term = t; await LoadBooks(); });
+            MessagingCenter.Subscribe<SearchBookViewModel, string>(this, "Search", async (vm, t) => { Term = t; await LoadBooks(); });
         }
 
         /// <summary>
